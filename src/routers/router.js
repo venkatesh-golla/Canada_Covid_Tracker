@@ -2,6 +2,8 @@ const express = require('express')
 const sql = require('mssql')
 const config = require('../models/sqlSetup')
 const moment = require('moment')
+const locationName= require('../utils/location')
+const { database } = require('../models/sqlSetup')
 const app = new express.Router()
 
 app.get('/', (req, res) => {
@@ -113,6 +115,7 @@ app.get('/region',async(req,res)=>{
         else {
             var dateGiven=req.query.date
             const regionName=req.query.regionName
+            console.log(`Region Name is ${regionName}`)
             if(dateGiven==null){
                 dateGiven='2020-07-06'  //moment().format('YYYY-MM-DD')
             }
@@ -122,10 +125,31 @@ app.get('/region',async(req,res)=>{
                     res.status(400).send(`Error from requesttwo  :${error}`)
                 }
                 else {
+                    console.log(result.recordset)
                     res.send(result.recordset)
                 }
             })
         }
     })
 })
+
+app.get('/location',(req,res)=>{
+    const latitude=req.query.latitude
+    const longitude=req.query.longitude
+    if(!(latitude && longitude)){
+        return res.send({
+            error:'Unable to find your location'
+        })
+    }
+    locationName(latitude,longitude,(error,locationData)=>{
+        if (error) {
+            return res.send({
+                error: error
+            })
+        }
+        res.send({data:locationData})
+    })
+})
+
+
 module.exports = app

@@ -18,6 +18,7 @@
     "mysql": "^2.18.1",
     "nodemon": "^2.0.4",
     "path": "^0.12.7",
+    "postman-request": "^2.88.1-postman.23",
     "tedious": "^8.3.0"
   },
   "devDependencies": {
