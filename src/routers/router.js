@@ -1,155 +1,156 @@
 const express = require('express')
-const sql = require('mssql')
-const config = require('../models/sqlSetup')
+const { config, sql, poolPromise } = require("../models/sqlSetup")
 const moment = require('moment')
-const locationName= require('../utils/location')
-const { database } = require('../models/sqlSetup')
+const locationName = require('../utils/location')
+const validator = require('validator')
+const query = require('../models/queries.json')
 const app = new express.Router()
 
-app.get('/', (req, res) => {
-    res.send('Hello')
-})
 
 app.get('/country', async (req, res) => {
-    await sql.connect(config, (err) => {
-        if (err) {
-            console.log(err)
+    try {
+        const pool = await poolPromise
+        var dateGiven = req.query.date
+        if (dateGiven == null) {
+            dateGiven = '2020-07-06'  //moment().format('YYYY-MM-DD')
         }
-        else {
-            var dateGiven=req.query.date
-            if(dateGiven==null){
-                dateGiven='2020-07-06'  //moment().format('YYYY-MM-DD')
-            }
-            var countryName=req.query.countryName
-            if(countryName==null){
-                countryName='canada'
-            }
-            const countryData = new sql.Request()
-            countryData.query(`select c.Name,cc.TotalConfirmed,cc.TotalRecovered,cc.TotalDeath,cc.ActiveCases,cc.TotalTests,cc.Population,cc.Source,cc.DateTime from covid_cases cc,country c, Country_Cases coc where cc.ID=coc.Covid_CaseId and coc.CountryCode=c.ID and c.Name='${countryName}' and cc.DateTime='${dateGiven}'`, (error, result) => {
-                if (error) {
-                    res.status(400).send(`Error from request two  :${error}`)
-                }
-                else {
-                    res.send(result.recordset)
-                }
-            })
+        var countryName = req.query.countryName
+        if (countryName == null) {
+            countryName = 'canada'
         }
-    })
+        const countryData = await pool.request()
+            .input('countryName', sql.VarChar, countryName)
+            .input('dateGiven', sql.VarChar, dateGiven)
+            .query(query.getCountryData)
+        res.send(countryData.recordset)
+    }
+    catch (error) {
+        res.status(500).send(error.message)
+    }
+
 })
 
-app.get('/allprovinces',async(req,res)=>{
-    await sql.connect(config, (err) => {
-        if (err) {
-            console.log(err)
+app.get('/allProvinces', async (req, res) => {
+    try {
+        const pool = await poolPromise
+        var dateGiven = req.query.date
+        if (dateGiven == null) {
+            dateGiven = '2020-07-06'  //moment().format('YYYY-MM-DD')
         }
-        else {
-            var dateGiven=req.query.date
-            if(dateGiven==null){
-                dateGiven='2020-07-06'  //moment().format('YYYY-MM-DD')
-            }
-            const provinceData = new sql.Request()
-            provinceData.query(`select p.Name, cc.TotalConfirmed,cc.TotalRecovered,cc.TotalDeath,cc.ActiveCases,cc.TotalTests,cc.Population,cc.Source from Province p, COVID_CASES cc, Province_Cases pc where pc.Covid_CaseId=cc.ID and pc.ProvinceCode=p.ID and cc.DateTime='${dateGiven}'`, (error, result) => {
-                if (error) {
-                    res.status(400).send(`Error from requesttwo  :${error}`)
-                }
-                else {
-                    res.send(result.recordset)
-                }
-            })
-        }
-    })
+        const provinceData = await pool.request()
+            .input('dateGiven', sql.VarChar, dateGiven)
+            .query(query.allProvinces)
+        res.send(provinceData.recordset)
+    }
+    catch (error) {
+        res.status(500).send(error.message)
+    }
 })
 
-app.get('/province',async(req,res)=>{
-    await sql.connect(config, (err) => {
-        if (err) {
-            console.log(err)
+app.get('/province', async (req, res) => {
+    try {
+        const pool = await poolPromise
+        var dateGiven = req.query.date
+        const provinceName = req.query.provinceName
+        if (provinceName == null) {
+            throw new Error(`Error: ProvinceName is required`)
         }
-        else {
-            var dateGiven=req.query.date
-            const provinceName=req.query.provinceName
-            if(dateGiven==null){
-                dateGiven='2020-07-06'  //moment().format('YYYY-MM-DD')
-            }
-            const provinceData = new sql.Request()
-            provinceData.query(`select p.Name, cc.TotalConfirmed,cc.TotalRecovered,cc.TotalDeath,cc.ActiveCases,cc.TotalTests,cc.Population,cc.Source from Province p, COVID_CASES cc, Province_Cases pc where pc.Covid_CaseId=cc.ID and pc.ProvinceCode=p.ID and cc.DateTime='${dateGiven}' and p.Name='${provinceName}'`, (error, result) => {
-                if (error) {
-                    res.status(400).send(`Error from requesttwo  :${error}`)
-                }
-                else {
-                    res.send(result.recordset)
-                }
-            })
+        if (dateGiven == null) {
+            dateGiven = '2020-07-06'  //moment().format('YYYY-MM-DD')
         }
-    })
+        const provinceData = await pool.request()
+            .input('provinceName', sql.VarChar, provinceName)
+            .input('dateGiven', sql.VarChar, dateGiven)
+            .query(query.province)
+        res.send(provinceData.recordset)
+    }
+    catch (error) {
+        res.status(500).send(error.message)
+    }
 })
 
-app.get('/allregions',async (req,res)=>{
-    await sql.connect(config, (err) => {
-        if (err) {
-            console.log(err)
+app.get('/allRegions', async (req, res) => {
+    try {
+        const pool = await poolPromise
+        var dateGiven = req.query.date
+        if (dateGiven == null) {
+            dateGiven = '2020-07-06'  //moment().format('YYYY-MM-DD')
         }
-        else {
-            var dateGiven=req.query.date
-            if(dateGiven==null){
-                dateGiven='2020-07-06'  //moment().format('YYYY-MM-DD')
-            }
-            const regionalData = new sql.Request()
-            regionalData.query(`select r.Name, cc.TotalConfirmed,cc.TotalRecovered,cc.TotalDeath,cc.ActiveCases,cc.TotalTests,cc.Population,cc.Source, cc.DateTime from Region r,COVID_CASES cc, Region_Cases rc where rc.Covid_CaseId=cc.ID and rc.RegionCode=r.ID and cc.DateTime='${dateGiven}'`, (error, result) => {
-                if (error) {
-                    res.status(400).send(`Error from requesttwo  :${error}`)
-                }
-                else {
-                    res.send(result.recordset)
-                }
-            })
-        }
-    })
+        const regionalData = await pool.request()
+            .input('dateGiven', sql.VarChar, dateGiven)
+            .query(query.allRegions)
+        res.send(regionalData.recordset)
+    }
+    catch (error) {
+        res.status(500).send(error.message)
+    }
 })
 
-app.get('/region',async(req,res)=>{
-    await sql.connect(config, (err) => {
-        if (err) {
-            console.log(err)
+app.get('/region', async (req, res) => {
+    try {
+        const pool = await poolPromise
+        var dateGiven = req.query.date
+        const regionName = req.query.regionName
+        if (regionName == null) {
+            throw new Error('Error: Region name is required')
         }
-        else {
-            var dateGiven=req.query.date
-            const regionName=req.query.regionName
-            console.log(`Region Name is ${regionName}`)
-            if(dateGiven==null){
-                dateGiven='2020-07-06'  //moment().format('YYYY-MM-DD')
-            }
-            const regionData = new sql.Request()
-            regionData.query(`select r.Name, cc.TotalConfirmed,cc.TotalRecovered,cc.TotalDeath,cc.ActiveCases,cc.TotalTests,cc.Population,cc.Source, cc.DateTime from Region r,COVID_CASES cc, Region_Cases rc where rc.Covid_CaseId=cc.ID and rc.RegionCode=r.ID and cc.DateTime='${dateGiven}' and r.Name='${regionName}'`, (error, result) => {
-                if (error) {
-                    res.status(400).send(`Error from requesttwo  :${error}`)
-                }
-                else {
-                    console.log(result.recordset)
-                    res.send(result.recordset)
-                }
-            })
+        if (dateGiven == null) {
+            dateGiven = '2020-07-06'  //moment().format('YYYY-MM-DD')
         }
-    })
+        const regionData = await pool.request()
+            .input('regionName', sql.VarChar, regionName)
+            .input('dateGiven', sql.VarChar, dateGiven)
+            .query(query.region)
+        res.send(regionData.recordset)
+    }
+    catch (error) {
+        res.status(500).send(error.message)
+    }
 })
 
-app.get('/location',(req,res)=>{
-    const latitude=req.query.latitude
-    const longitude=req.query.longitude
-    if(!(latitude && longitude)){
+app.post('/feedback', async (req, res) => {
+    try {
+        const name = req.body.name
+        const email = req.body.emailId
+        const comments = req.body.comments
+        if (name != null && email != null && comments != null) {
+            if (!validator.isEmail(email)) {
+                throw Error('Email format is Invalid')
+            }
+            const pool = await poolPromise
+            const feedback = await pool.request()
+                .input('name', sql.VarChar, name)
+                .input('email', sql.VarChar, email)
+                .input('comments', sql.VarBinary, comments)
+                .query("insert into Feedback(name, emailId, comments) values(@name,@email,@comments)")
+            res.send(feedback)
+        } else {
+            return new Error('Error : Please enter all the fields')
+        }
+    }
+    catch (error) {
+        res.status(500).send(error.message)
+    }
+})
+
+app.get('/location', (req, res) => {
+    const latitude = req.query.latitude
+    const longitude = req.query.longitude
+    if (!(latitude && longitude)) {
         return res.send({
-            error:'Unable to find your location'
+            error: 'Unable to find your location'
         })
     }
-    locationName(latitude,longitude,(error,locationData)=>{
+    locationName(latitude, longitude, (error, locationData) => {
         if (error) {
             return res.send({
                 error: error
             })
         }
-        res.send({data:locationData})
+        res.send({ data: locationData })
     })
 })
+
 
 
 module.exports = app

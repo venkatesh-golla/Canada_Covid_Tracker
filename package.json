@@ -19,7 +19,8 @@
     "nodemon": "^2.0.4",
     "path": "^0.12.7",
     "postman-request": "^2.88.1-postman.23",
-    "tedious": "^8.3.0"
+    "tedious": "^8.3.0",
+    "validator": "^13.1.1"
   },
   "devDependencies": {
     "env-cmd": "^10.1.0"
