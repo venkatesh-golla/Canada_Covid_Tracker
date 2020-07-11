@@ -69,6 +69,29 @@ app.get('/province', async (req, res) => {
     }
 })
 
+app.get('/provinceGraph',async(req,res)=>{
+    try{
+        const pool = await poolPromise
+        var dateGiven = req.query.date
+        const provinceName = req.query.provinceName
+        if (provinceName == null) {
+            throw new Error(`Error: ProvinceName is required`)
+        }
+        if (dateGiven == null) {
+            dateGiven = '2020-07-06'  //moment().format('YYYY-MM-DD')
+        }
+        const provinceData = await pool.request()
+        .input('provinceName', sql.VarChar, provinceName)
+        .input('dateGiven', sql.VarChar, dateGiven)
+        .query(query.provinceGraph)
+    res.send(provinceData.recordset)
+}
+catch (error) {
+    res.status(500).send(error.message)
+}
+
+})
+
 app.get('/allRegions', async (req, res) => {
     try {
         const pool = await poolPromise
@@ -101,6 +124,28 @@ app.get('/region', async (req, res) => {
             .input('regionName', sql.VarChar, regionName)
             .input('dateGiven', sql.VarChar, dateGiven)
             .query(query.region)
+        res.send(regionData.recordset)
+    }
+    catch (error) {
+        res.status(500).send(error.message)
+    }
+})
+
+app.get('/regionGraph', async (req, res) => {
+    try {
+        const pool = await poolPromise
+        var dateGiven = req.query.date
+        const regionName = req.query.regionName
+        if (regionName == null) {
+            throw new Error('Error: Region name is required')
+        }
+        if (dateGiven == null) {
+            dateGiven = '2020-07-06'  //moment().format('YYYY-MM-DD')
+        }
+        const regionData = await pool.request()
+            .input('regionName', sql.VarChar, regionName)
+            .input('dateGiven', sql.VarChar, dateGiven)
+            .query(query.regionGraph)
         res.send(regionData.recordset)
     }
     catch (error) {

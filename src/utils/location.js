@@ -16,13 +16,4 @@ const locationName=(latitude, longitude, callback)=>{
     })
 }
 
-// const result=locationName(43.4825561,-80.51049189999999,(error,body)=>{
-//     if(error){
-//         console.log(error)
-//     }
-//     else{
-//         console.log(body)
-//     }
-// })
-
 module.exports=locationName

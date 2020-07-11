@@ -1,14 +1,71 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.css">
+    <link href=https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css rel=stylesheet>
+    <link href=https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/css/dataTables.bootstrap4.min.css
+        rel=stylesheet>
     <title>Document</title>
 </head>
-<body>
-    hello from html
-    <button id="buttonPress">submit</button>
 
-    <button id="sendLocation">Send Location</button>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <button id="sendLocation">Send Location</button>
+            </div>
+            <div class="col-3">
+                <input type="date" id="datePickerProvince"><br><br>
+                <button id="provinceDataButton">Province Data</button>
+                <br><br>
+            </div>
+            <div class="col-3">
+                <label for="regionName">Region Name </label>  
+                <input type="text" name="Region Name" id="regionName"><br><br>
+                <input type="date" id="datePickerRegion"><br><br>
+                <button id="regionDataButton">Region Data</button>
+                <br><br>
+            </div>
+            <div class="col-3">
+                <button id="allRegionsButton">All Regions</button>
+            </div>
+        </div>
+    </div>
+    <p></p>
+
+    <div class="container">
+        <table class="table table-bordered table-hover table-inverse table-striped" id="table" style="display: none;">
+            <thead id="tableHead">
+                <tr>
+                    <th>Active Cases</th>
+                    <th>DateTime</th>
+                    <th>Name</th>
+                    <th>Population</th>
+                    <th>Source</th>
+                    <th>TotalConfirmed</th>
+                    <th>TotalDeath</th>
+                    <th>TotalRecovered</th>
+                    <th>TotalTests</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+
+            </tbody>
+        </table>
+    </div>
+
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js></script>
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/js/jquery.dataTables.min.js></script>
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/js/dataTables.bootstrap4.min.js></script>
+    <script src="./js//table.js"></script>
     <script src="./js/sample.js"></script>
+
 </body>
+
 </html>
