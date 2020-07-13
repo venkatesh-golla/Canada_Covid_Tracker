@@ -16,23 +16,43 @@
 
 <body>
     <div class="container">
+        <div class="row" height="400">
+            <div class="col-4">
+                <label class="pt-5 pr-2" for="regionNameGraphTb" style="float: left;">Region Name </label>
+                <input class="mt-5" type="text" name="region Name" id="regionNameGraphTb">
+                <button class="mt-5" id="regionGraphButton">Region Graph</button>
+            </div>
+            <div class="col-8">
+                <canvas id="myChart" width="400" height="400"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="container">
         <div class="row">
-            <div class="col-3">
+            <div class="col-2">
                 <button id="sendLocation">Send Location</button>
             </div>
+            <div class="col-2">
+                <input type="date" id="datePickerAllProvinces"><br><br>
+                <button id="allProvincesDataButton">All Provinces</button>
+                <br><br>
+            </div>
             <div class="col-3">
+                <label for="provinceName">Province Name </label>
+                <input type="text" name="Province Name" id="provinceName"><br><br>
                 <input type="date" id="datePickerProvince"><br><br>
                 <button id="provinceDataButton">Province Data</button>
                 <br><br>
             </div>
             <div class="col-3">
-                <label for="regionName">Region Name </label>  
+                <label for="regionName">Region Name </label>
                 <input type="text" name="Region Name" id="regionName"><br><br>
                 <input type="date" id="datePickerRegion"><br><br>
                 <button id="regionDataButton">Region Data</button>
                 <br><br>
             </div>
-            <div class="col-3">
+            <div class="col-2">
+                <input type="date" id="datePickerAllRegions"><br><br>
                 <button id="allRegionsButton">All Regions</button>
             </div>
         </div>
@@ -40,8 +60,8 @@
     <p></p>
 
     <div class="container">
-        <table class="table table-bordered table-hover table-inverse table-striped" id="table" style="display: none;">
-            <thead id="tableHead">
+        <table class="table table-bordered table-hover" id="table">
+            <thead id="tableHead" class="thead-dark">
                 <tr>
                     <th>Active Cases</th>
                     <th>DateTime</th>
@@ -59,10 +79,12 @@
             </tbody>
         </table>
     </div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.0-alpha/Chart.js"></script>
     <script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js></script>
     <script src=https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/js/jquery.dataTables.min.js></script>
     <script src=https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/js/dataTables.bootstrap4.min.js></script>
+    <script src="./js/functions.js"></script>
+    <script src="./js/graph.js"></script>
     <script src="./js//table.js"></script>
     <script src="./js/sample.js"></script>
 

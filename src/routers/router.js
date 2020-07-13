@@ -4,6 +4,7 @@ const moment = require('moment')
 const locationName = require('../utils/location')
 const validator = require('validator')
 const query = require('../models/queries.json')
+const Nexmo=require('nexmo')
 const app = new express.Router()
 
 
@@ -73,7 +74,7 @@ app.get('/provinceGraph',async(req,res)=>{
     try{
         const pool = await poolPromise
         var dateGiven = req.query.date
-        const provinceName = req.query.provinceName
+        const provinceName = 'Alberta'
         if (provinceName == null) {
             throw new Error(`Error: ProvinceName is required`)
         }
@@ -84,6 +85,8 @@ app.get('/provinceGraph',async(req,res)=>{
         .input('provinceName', sql.VarChar, provinceName)
         .input('dateGiven', sql.VarChar, dateGiven)
         .query(query.provinceGraph)
+
+        //console.log(JSON.stringify(provinceData.recordset[0].split(':')))
     res.send(provinceData.recordset)
 }
 catch (error) {
@@ -167,7 +170,7 @@ app.post('/feedback', async (req, res) => {
                 .input('name', sql.VarChar, name)
                 .input('email', sql.VarChar, email)
                 .input('comments', sql.VarBinary, comments)
-                .query("insert into Feedback(name, emailId, comments) values(@name,@email,@comments)")
+                .query(query.feedbackInput)
             res.send(feedback)
         } else {
             return new Error('Error : Please enter all the fields')
@@ -196,6 +199,20 @@ app.get('/location', (req, res) => {
     })
 })
 
+app.get('/regionNames',async (req,res)=>{
+    const pool = await poolPromise
+    const regionNames = await pool.request()
+        .query(query.regionNames)
+    console.log(regionNames.recordsets)
+    res.send(regionNames)
+})
 
+app.get('/provinceNames',async (req,res)=>{
+    const pool = await poolPromise
+    const provinceNames = await pool.request()
+        .query(query.provinceNames)
+    console.log(provinceNames.recordsets)
+    res.send(provinceNames)
+})
 
 module.exports = app

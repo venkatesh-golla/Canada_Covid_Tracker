@@ -1,7 +1,7 @@
 const tableFunction=(data,tableId,tableBodyId)=>{
-    console.log(data)
-    console.log("Table Id is "+tableId)
-    console.log("Table Body Id is "+tableBodyId)
+    // console.log(data)
+    // console.log("Table Id is "+tableId)
+    // console.log("Table Body Id is "+tableBodyId)
     if (data.length > 0) {
         var tempbody = ""
         data.forEach(element => {

@@ -1,3 +1,21 @@
+document.addEventListener('DOMContentLoaded', (e)=> {
+    e.preventDefault()
+    const dateGiven=null
+    fetch(dateGiven ? `/allProvinces?date=${dateGiven}`: `/allProvinces`).then((response) => {
+        response.json().then((data) => {
+            if (data.error) {
+                console.log('Error from Js')
+            }
+            else if (data == undefined||null) {
+                console.log('No data found for province in database')
+            }
+            else {
+                tableFunction(data,"table","tablebody")
+            }
+        })
+    })
+}, false);
+
 document.querySelector('#sendLocation').addEventListener('click', (e) => {
     e.preventDefault()
     if (!navigator.geolocation) {
@@ -26,7 +44,7 @@ document.querySelector('#sendLocation').addEventListener('click', (e) => {
                                     console.log('No data found for region in database')
                                 }
                                 else {
-                                    console.log(data[0] == undefined)
+                                    console.log(data[0])
                                     console.log(Object.keys(data[0]).length)
                                     tableFunction(data,"table","tablebody")
                                 }
@@ -45,10 +63,35 @@ document.querySelector('#sendLocation').addEventListener('click', (e) => {
 
 })
 
-
 document.querySelector('#provinceDataButton').addEventListener('click', (e) => {
     e.preventDefault()
     const dateGiven = document.querySelector('#datePickerProvince').value
+    const provinceName = document.querySelector('#provinceName').value.toString()
+    if (regionName) {
+        fetch(dateGiven ? `/province?date=${dateGiven}&provinceName=${provinceName}` : `/province?provinceName=${provinceName}`).then((response) => {
+            response.json().then((data) => {
+                if (data.error) {
+                    console.log('Error from Js')
+                }
+                else if (data == undefined) {
+                    console.log('No data found for province in database')
+                }
+                else {
+                    console.log(data)
+                    tableFunction(data,"table","tablebody")
+                }
+            })
+        })
+    }
+    else {
+        console.log('RegionName has not been entered')
+    }
+
+})
+
+document.querySelector('#allProvincesDataButton').addEventListener('click', (e) => {
+    e.preventDefault()
+    const dateGiven = document.querySelector('#datePickerAllProvinces').value
         fetch(dateGiven ? `/allProvinces?date=${dateGiven}`: `/allProvinces`).then((response) => {
             console.log('inside fetch')
             response.json().then((data) => {
@@ -96,7 +139,8 @@ document.querySelector('#regionDataButton').addEventListener('click', (e) => {
 
 document.querySelector('#allRegionsButton').addEventListener('click',(e)=>{
     e.preventDefault()
-    fetch('/allRegions').then((response)=>{
+    const dateGiven = document.querySelector('#datePickerAllRegions').value
+    fetch(dateGiven?`/allRegions?date=${dateGiven}`:`/allRegions`).then((response)=>{
         response.json().then((data)=>{
             if (data.error) {
                 console.log('Error from Js')
@@ -111,3 +155,4 @@ document.querySelector('#allRegionsButton').addEventListener('click',(e)=>{
         })
     })
 })
+
