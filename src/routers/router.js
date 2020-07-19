@@ -161,11 +161,11 @@ app.post('/feedback', async (req, res) => {
     try {
         const firstName = req.body.firstName
         const lastName = req.body.lastName
-        const email = req.body.emailId
+        const emailId = req.body.emailId
         const comments = req.body.comments
         const country=req.body.country
-        if (firstName != null&&lastName != null&& email != null && comments != null) {
-            if (!validator.isEmail(email)) {
+        if (firstName != null&&lastName != null&& emailId != null && comments != null) {
+            if (!validator.isEmail(emailId)) {
                 console.log('email format is wrong')
                 throw Error('Email format is Invalid')
             }
@@ -174,7 +174,7 @@ app.post('/feedback', async (req, res) => {
                 .input('firstName', sql.VarChar, firstName)
                 .input('lastName', sql.VarChar, lastName)
                 .input('country', sql.VarChar, country)
-                .input('email', sql.VarChar, email)
+                .input('email', sql.VarChar, emailId)
                 .input('comments', sql.VarBinary, comments)
                 .query(query.feedbackInput)
             res.send(JSON.stringify(feedback))
