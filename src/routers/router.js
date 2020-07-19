@@ -31,6 +31,31 @@ app.get('/country', async (req, res) => {
 
 })
 
+app.get('/countryGraph',async(req,res)=>{
+    try{
+        const pool = await poolPromise
+        var dateGiven = req.query.date
+        const countryName = 'Canada'
+        if (countryName == null) {
+            throw new Error(`Error: Country Name is required`)
+        }
+        if (dateGiven == null) {
+            dateGiven = '2020-07-06'  //moment().format('YYYY-MM-DD')
+        }
+        const countryData = await pool.request()
+        .input('countryName', sql.VarChar, countryName)
+        .input('dateGiven', sql.VarChar, dateGiven)
+        .query(query.countryGraph)
+
+        //console.log(JSON.stringify(provinceData.recordset[0].split(':')))
+    res.send(JSON.stringify(countryData.recordset))
+}
+catch (error) {
+    res.status(500).send(error.message)
+}
+
+})
+
 app.get('/allProvinces', async (req, res) => {
     try {
         const pool = await poolPromise

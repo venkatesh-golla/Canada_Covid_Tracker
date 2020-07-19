@@ -26,11 +26,18 @@
 				display: none;
 			}
 		}
-
 		.graphContainer{
+			float: left;
 			width: 600px;
 			height: 600px;
-			margin-left: 100px;;
+		}
+		.graphCountryContainer{
+			float: right;
+			width: 600px;
+			height: 700px;
+		}
+		.regionHeading{
+			margin-left: 60px;
 		}
 	</style>
 </head>
@@ -117,10 +124,15 @@
 			</div>
 		</div>
 	</div>
-
-	<div class="graphContainer" id="graphContainer">
-		<canvas id="graphCanvas" style="width: 600px;height: 600px;"></canvas>
+	<div class="row">
+		<div class="graphContainer" id="graphContainer">
+			<canvas id="graphCanvas" style="width: 600px;height: 600px;"></canvas>
+		</div>
+		<div class="graphCountryContainer" id="graphCountryContainer">
+			<canvas id="graphCountryCanvas" style="width: 600px;height: 600px;"></canvas>
+		</div>
 	</div>
+
 	<canvas id="empty"></canvas>
 	<hr>
 	</div>

@@ -17,7 +17,32 @@ document.querySelector('#graphRegionSubmitButton').addEventListener('click', (e)
                 });
                 console.log(data)
                 console.log(dataArray)
-                chartDisplay(dataArray)
+                chartDisplay(dataArray,'graphContainer','graphCanvas')
+            }
+        })
+    })
+})
+
+document.addEventListener('DOMContentLoaded',function() {
+    const dateGiven = null
+    console.log('inside country graph listener')
+    fetch(dateGiven ? `/countryGraph?date=${dateGiven}` : `/countryGraph`).then((response) => {
+        console.log('inside fetch of graph')
+        response.json().then((data) => {
+            if (data.error) {
+                console.log('Error from Js')
+            }
+            else if (data == undefined || null) {
+                console.log('No data found for region in database')
+            }
+            else {
+                const dataArray = []
+                data.forEach(element => {
+                    dataArray.push(element["TotalConfirmed"])
+                });
+                console.log(data)
+                console.log(dataArray)
+                chartDisplay(dataArray,'graphCountryContainer','graphCountryCanvas')
             }
         })
     })
@@ -48,10 +73,11 @@ document.querySelector('#graphRegionSubmitButton').addEventListener('click', (e)
 //     })
 // }, false);
 
-const chartDisplay = (dataArray) => {
-    document.getElementById('graphContainer').innerHTML= '&nbsp;'
-    document.getElementById('graphContainer').innerHTML='<canvas id="graphCanvas" style="width: 600px;height: 600px;"></canvas>'
-    var ctx = document.getElementById('graphCanvas').getContext('2d')
+const chartDisplay = (dataArray,containerId,canvasId) => {
+    document.getElementById(`${containerId}`).innerHTML= '&nbsp;'
+    document.getElementById(`${containerId}`).innerHTML=`<canvas id="${canvasId}" style="width: 600px;height: 600px;"></canvas>`
+    console.log(`${canvasId}`)
+    var ctx = document.getElementById(`${canvasId}`).getContext('2d')
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
