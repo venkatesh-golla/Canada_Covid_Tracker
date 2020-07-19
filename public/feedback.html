@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>COVID-19 Website - Region Details</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles/feedback.css">
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="scripts/provinceValidation.js"></script>
+  <style>
+    /* Add a gray background color and some padding to the footer */
+  
+    .carousel-inner img {
+      width: 100%; /* Set width to 100% */
+      min-height: 200px;
+    }
+
+    /* Hide the carousel text when the screen is less than 600 pixels wide */
+    @media (max-width: 600px) {
+      .carousel-caption {
+        display: none; 
+      }
+    }
+  </style>
+</head>
+<body>
+		<nav class="navbar navbar-inverse">
+		  <div class="container-fluid">
+			<div class="navbar-header">
+			  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>                        
+			  </button>
+			  <div class="headerIcon">
+			  <img src="https://image.flaticon.com/icons/png/512/2760/2760147.png" width="30" height="30">
+			  </div>
+			</div>
+			<div class="collapse navbar-collapse" id="myNavbar">
+			   <ul class="nav navbar-nav">
+				<li><a href="index.html">Home</a></li>
+				<li><a href="province.html">Provinces</a></li>
+				<li><a href="region.html">Regions</a></li>
+				<li><a href="graph.html">Graphs</a></li>
+				<li class="active"><a href="feedback.html">Feedback</a></li>
+				<li><a href="about.html">About Us</a></li>
+			  </ul>
+			</div>
+		  </div>
+		</nav>
+
+		
+	<div class="container">
+	<h1>ENTER YOUR DETAILS</h1>
+	</br>
+	  <form action="action_page.php">
+
+			<label for="fname">First Name</label>
+			<input type="text" id="fname" name="firstname" placeholder="Your name..">
+
+			<label for="lname">Last Name</label>
+			<input type="text" id="lname" name="lastname" placeholder="Your last name..">
+			
+			<label for="lname">Email</label>
+			<input type="text" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="Enter a valid email id">
+
+			<label for="country">Country</label>
+			<select id="country" name="country">
+			  <option value="australia">Australia</option>
+			  <option value="canada">Canada</option>
+			  <option value="usa">USA</option>
+			</select></br></br>
+
+			<label for="subject">Subject</label>
+			<textarea id="subject" name="subject" placeholder="Write your feedback here. . ." style="height:200px"></textarea>
+
+			<input type="submit" value="Submit">
+
+		</form>
+	</div>
+		 
+		  <hr>
+
+		<footer class="footerClass text-center">
+		  <p><p>&copy; Regional COVID-19 Information Website 2020</p></p>
+		</footer>
+
+</body>
+</html>

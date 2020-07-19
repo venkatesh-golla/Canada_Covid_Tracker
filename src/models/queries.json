@@ -7,7 +7,7 @@
     "provinceGraph":"select p.Name, cc.TotalConfirmed,cc.TotalRecovered,cc.TotalDeath,cc.ActiveCases,cc.TotalTests,cc.Population,cc.Source ,cc.DateTime from Province p, COVID_CASES cc, Province_Cases pc where pc.Covid_CaseId=cc.ID and pc.ProvinceCode=p.ID and p.Name=@provinceName and cc.DateTime between convert(char(10), dateadd(day,-4,@dateGiven),23) and convert(varchar, @dateGiven, 23)",
     "regionGraph":"select r.Name, cc.TotalConfirmed,cc.TotalRecovered,cc.TotalDeath,cc.ActiveCases,cc.TotalTests,cc.Population,cc.Source ,cc.DateTime from Region r, COVID_CASES cc, Region_Cases rc where rc.Covid_CaseId=cc.ID and rc.RegionCode=r.ID and r.Name=@regionName and cc.DateTime between convert(char(10), dateadd(day,-4,@dateGiven),23) and convert(varchar, @dateGiven, 23)",
     "trial":"select cc.TotalConfirmed from Province p, COVID_CASES cc, Province_Cases pc where pc.Covid_CaseId=cc.ID and pc.ProvinceCode=p.ID and p.Name=@provinceName and cc.DateTime between convert(char(10), dateadd(day,-4,@dateGiven),23) and convert(varchar, @dateGiven, 23)",
-    "feedbackInput":"insert into Feedback(name, emailId, comments) values(@name,@email,@comments)",
+    "feedbackInput":"insert into Feedback(firstName,lastName,country,emailId, comments) values(@firstName,@lastName,@country,@email,@comments)",
     "regionNames":"select distinct(Name) from Region",
     "provinceNames":"select distinct(Name) from Province"
 }

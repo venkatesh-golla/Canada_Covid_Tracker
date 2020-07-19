@@ -1,93 +1,126 @@
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
-        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.css">
-    <link href=https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css rel=stylesheet>
-    <link href=https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/css/dataTables.bootstrap4.min.css
-        rel=stylesheet>
-    <title>Document</title>
+  <title>COVID-19 Website - Home Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="styles/home.css">
+  <style>
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+    }
+
+    .carousel-inner img {
+      width: 100%; /* Set width to 100% */
+      min-height: 200px;
+    }
+
+    /* Hide the carousel text when the screen is less than 600 pixels wide */
+    @media (max-width: 600px) {
+      .carousel-caption {
+        display: none; 
+      }
+    }
+  </style>
 </head>
-
 <body>
-    <div class="container">
-        <div class="row" height="400">
-            <div class="col-4">
-                <label class="pt-5 pr-2" for="regionNameGraphTb" style="float: left;">Region Name </label>
-                <input class="mt-5" type="text" name="region Name" id="regionNameGraphTb">
-                <button class="mt-5" id="regionGraphButton">Region Graph</button>
-            </div>
-            <div class="col-8">
-                <canvas id="myChart" width="400" height="400"></canvas>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-2">
-                <button id="sendLocation">Send Location</button>
-            </div>
-            <div class="col-2">
-                <input type="date" id="datePickerAllProvinces"><br><br>
-                <button id="allProvincesDataButton">All Provinces</button>
-                <br><br>
-            </div>
-            <div class="col-3">
-                <label for="provinceName">Province Name </label>
-                <input type="text" name="Province Name" id="provinceName"><br><br>
-                <input type="date" id="datePickerProvince"><br><br>
-                <button id="provinceDataButton">Province Data</button>
-                <br><br>
-            </div>
-            <div class="col-3">
-                <label for="regionName">Region Name </label>
-                <input type="text" name="Region Name" id="regionName"><br><br>
-                <input type="date" id="datePickerRegion"><br><br>
-                <button id="regionDataButton">Region Data</button>
-                <br><br>
-            </div>
-            <div class="col-2">
-                <input type="date" id="datePickerAllRegions"><br><br>
-                <button id="allRegionsButton">All Regions</button>
-            </div>
-        </div>
-    </div>
-    <p></p>
 
-    <div class="container">
-        <table class="table table-bordered table-hover" id="table">
-            <thead id="tableHead" class="thead-dark">
-                <tr>
-                    <th>Active Cases</th>
-                    <th>DateTime</th>
-                    <th>Name</th>
-                    <th>Population</th>
-                    <th>Source</th>
-                    <th>TotalConfirmed</th>
-                    <th>TotalDeath</th>
-                    <th>TotalRecovered</th>
-                    <th>TotalTests</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody">
-
-            </tbody>
-        </table>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <div class="headerIcon">
+			  <img src="https://image.flaticon.com/icons/png/512/2760/2760147.png" width="30" height="30">
+		</div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.0-alpha/Chart.js"></script>
-    <script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js></script>
-    <script src=https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/js/jquery.dataTables.min.js></script>
-    <script src=https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/js/dataTables.bootstrap4.min.js></script>
-    <script src="./js/functions.js"></script>
-    <script src="./js/graph.js"></script>
-    <script src="./js//table.js"></script>
-    <script src="./js/sample.js"></script>
+    <div class="collapse navbar-collapse" id="myNavbar">
+			  <ul class="nav navbar-nav">
+				<li class="active"><a href="#">Home</a></li>
+				<li><a href="province.html">Provinces</a></li>
+				<li><a href="region.html">Regions</a></li>
+				<li><a href="graph.html">Graphs</a></li>
+				<li><a href="feedback.html">Feedback</a></li>
+				<li><a href="about.html">About Us</a></li>
+			  </ul>
+			</div>
+  </div>
+</nav>
+
+<div class="container">
+<div class="row">
+  <div class="col-sm-8">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+		<li data-target="#myCarousel" data-slide-to="2"></li>
+		<li data-target="#myCarousel" data-slide-to="3"></li>
+      </ol>
+
+      <!-- Wrapper for slides -->
+      <div class="carousel-inner" role="listbox">
+        <div class="item active">
+          <img src="https://d36zfg4d500s0g.cloudfront.net/cache/images/DT/up/dt/2020/03/COVID19-Canadian-Dental-Association-says-situation-is-changing-rapidly-1188x668-.jpg" alt="Image">    
+        </div>
+
+        <div class="item">
+          <img src="https://assets.change.org/photos/7/ep/mj/lcEPmjrqYjORgdh-800x450-noPad.jpg?1585756311" alt="Image">    
+        </div>
+		
+		<div class="item">
+          <img src="https://www.iheartradio.ca/image/policy:1.10728530:1584115033/covid-19.png?f=default&$p$f=7c255d3" alt="Image">     
+        </div>
+		
+		<div class="item">
+          <img src="https://shawglobalnews.files.wordpress.com/2020/06/23324214-e1592070361537.jpg?quality=85&strip=all" alt="Image">     
+        </div>
+      </div>
+
+      <!-- Left and right controls -->
+      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="well2">
+      <a href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection.html?&utm_campaign=gc-hc-sc-coronavirus2021-ao-2021-0005-10020125402&utm_medium=search&utm_source=google-ads-107800103024&utm_content=text-en-434525470053&utm_term=covid#a2"><p>How Canada is monitoring COVID-19?</p></a>
+    </div>
+    <div class="well2">
+       <a href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/symptoms.html"><p>Symptoms and Treatment</p></a>
+    </div>
+    <div class="well2">
+       <a href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/prevention-risks.html"><p>Prevention and Risks</p></a>
+    </div>
+	 <div class="well2">
+       <a href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/latest-travel-health-advice.html"><p>Travel Restrictions</p></a>
+    </div>
+	 <div class="well2">
+       <a href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/prevention-risks/measures-reduce-community.html"><p>Measures to reduce COVID-19</p></a>
+    </div>
+  </div>
+</div>
+<hr>
+</div>
+
+		<footer class="footerClass text-center">
+		  <p><p>&copy; Regional COVID-19 Information Website 2020</p></p>
+		</footer>
 
 </body>
-
 </html>

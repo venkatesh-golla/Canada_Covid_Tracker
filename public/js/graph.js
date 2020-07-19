@@ -1,54 +1,57 @@
-document.querySelector('#regionGraphButton').addEventListener('click',(e)=>{
-    e.preventDefault()
-    const regionName=document.querySelector("#regionNameGraphTb").value
-    const dateGiven=null
-    fetch(dateGiven ? `/regionGraph?date=${dateGiven}&regionName=${regionName}`: `/regionGraph?regionName=${regionName}`).then((response) => {
+document.querySelector('#graphRegionSubmitButton').addEventListener('click', (e) => {
+    const regionName = document.querySelector("#searchRegionGraph").value
+    const dateGiven = null
+    fetch(dateGiven ? `/regionGraph?date=${dateGiven}&regionName=${regionName}` : `/regionGraph?regionName=${regionName}`).then((response) => {
         console.log('inside fetch of graph')
         response.json().then((data) => {
             if (data.error) {
                 console.log('Error from Js')
             }
-            else if (data == undefined||null) {
+            else if (data == undefined || null) {
                 console.log('No data found for region in database')
             }
             else {
-                const dataArray=[]
+                const dataArray = []
                 data.forEach(element => {
-                    dataArray.push(element["TotalConfirmed"])                    
+                    dataArray.push(element["TotalConfirmed"])
                 });
-                console.log(dataArray)
                 console.log(data)
-                dataFunction(dataArray)
+                console.log(dataArray)
+                chartDisplay(dataArray)
             }
         })
     })
 })
-document.addEventListener('DOMContentLoaded', function() {
-    const dateGiven=null
-    fetch(dateGiven ? `/provinceGraph?date=${dateGiven}`: `/provinceGraph`).then((response) => {
-        console.log('inside fetch of graph')
-        response.json().then((data) => {
-            if (data.error) {
-                console.log('Error from Js')
-            }
-            else if (data == undefined||null) {
-                console.log('No data found for province in database')
-            }
-            else {
-                const dataArray=[]
-                data.forEach(element => {
-                    dataArray.push(element["TotalConfirmed"])                    
-                });
-                console.log(dataArray)
-                console.log(data)
-                dataFunction(dataArray)
-            }
-        })
-    })
-}, false);
 
-const dataFunction = (dataArray) => {
-    var ctx = document.getElementById('myChart').getContext('2d');
+
+// document.addEventListener('DOMContentLoaded', function() {
+//     const dateGiven=null
+//     fetch(dateGiven ? `/provinceGraph?date=${dateGiven}`: `/provinceGraph`).then((response) => {
+//         console.log('inside fetch of graph')
+//         response.json().then((data) => {
+//             if (data.error) {
+//                 console.log('Error from Js')
+//             }
+//             else if (data == undefined||null) {
+//                 console.log('No data found for province in database')
+//             }
+//             else {
+//                 const dataArray=[]
+//                 data.forEach(element => {
+//                     dataArray.push(element["TotalConfirmed"])                    
+//                 });
+//                 console.log(dataArray)
+//                 console.log(data)
+//                 chartDisplay(dataArray)
+//             }
+//         })
+//     })
+// }, false);
+
+const chartDisplay = (dataArray) => {
+    document.getElementById('graphContainer').innerHTML= '&nbsp;'
+    document.getElementById('graphContainer').innerHTML='<canvas id="graphCanvas" style="width: 600px;height: 600px;"></canvas>'
+    var ctx = document.getElementById('graphCanvas').getContext('2d')
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -84,7 +87,8 @@ const dataFunction = (dataArray) => {
                 }]
             }
         }
-    });
+    })
+    console.log(ctx)
 }
 
 

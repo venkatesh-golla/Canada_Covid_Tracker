@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>COVID-19 Website - Region Details</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="styles/province.css">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script src="scripts/provinceValidation.js"></script>
+	<style>
+		/* Add a gray background color and some padding to the footer */
+
+		.carousel-inner img {
+			width: 100%;
+			/* Set width to 100% */
+			min-height: 200px;
+		}
+
+		/* Hide the carousel text when the screen is less than 600 pixels wide */
+		@media (max-width: 600px) {
+			.carousel-caption {
+				display: none;
+			}
+		}
+
+		.graphContainer{
+			width: 600px;
+			height: 600px;
+			margin-left: 100px;;
+		}
+	</style>
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<div class="headerIcon">
+					<img src="https://image.flaticon.com/icons/png/512/2760/2760147.png" width="30" height="30">
+				</div>
+			</div>
+			<div class="collapse navbar-collapse" id="myNavbar">
+				<ul class="nav navbar-nav">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="province.html">Provinces</a></li>
+					<li><a href="region.html">Regions</a></li>
+					<li class="active"><a href="graph.html">Graphs</a></li>
+					<li><a href="feedback.html">Feedback</a></li>
+					<li><a href="about.html">About Us</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-4">
+				<div>
+					<label for="dateSelect">Search Region</label>
+					<input type="text" name="search" placeholder="Search.." id="searchRegionGraph">
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div>
+					<label for="dateSelect">Select Date</label>
+					<input type="date" name="dateSelect" id="datePickerRegionGraph">
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div>
+					<input type="submit" id="graphRegionSubmitButton" value="Submit">&nbsp;<input type="submit"
+						onclick="myFunction()" value="Reset">
+				</div>
+				<p id="provinceValidation"></p>
+			</div>
+		</div>
+		<hr>
+	</div>
+
+	<div class="container text-center">
+		<h2 id="tableHeading" text-align="leftwards">Coronavirus disease 2019 (COVID-19) - <p id="searchProvinceValue">
+			</p>
+		</h2>
+		<br>
+
+		<div class="col-sm-6">
+			<div class="totalCases">
+				<p>Total Cases:
+				<p>176</p>
+				</p>
+			</div>
+			<div class="totalDeaths">
+				<p>Total Deaths:
+				<p>20</p>
+				</p>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="activeCases">
+				<p>Active Cases:
+				<p>86</p>
+				</p>
+			</div>
+			<div class="recoveredCases">
+				<p>Total Recovered:
+				<p>76</p>
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="graphContainer" id="graphContainer">
+		<canvas id="graphCanvas" style="width: 600px;height: 600px;"></canvas>
+	</div>
+	<canvas id="empty"></canvas>
+	<hr>
+	</div>
+
+	<footer class="container-fluid text-center">
+		<p>
+		<p>&copy; Regional COVID-19 Information Website 2020</p>
+		</p>
+	</footer>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.0-alpha/Chart.js"></script>
+	<script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js></script>
+	<script src="./js/graph.js"></script>
+
+</body>
+
+</html>

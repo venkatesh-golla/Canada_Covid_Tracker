@@ -23,7 +23,7 @@ app.get('/country', async (req, res) => {
             .input('countryName', sql.VarChar, countryName)
             .input('dateGiven', sql.VarChar, dateGiven)
             .query(query.getCountryData)
-        res.send(countryData.recordset)
+        res.send(JSON.stringify(countryData.recordset))
     }
     catch (error) {
         res.status(500).send(error.message)
@@ -41,7 +41,8 @@ app.get('/allProvinces', async (req, res) => {
         const provinceData = await pool.request()
             .input('dateGiven', sql.VarChar, dateGiven)
             .query(query.allProvinces)
-        res.send(provinceData.recordset)
+            console.log
+        res.send(JSON.stringify(provinceData.recordset))
     }
     catch (error) {
         res.status(500).send(error.message)
@@ -63,7 +64,7 @@ app.get('/province', async (req, res) => {
             .input('provinceName', sql.VarChar, provinceName)
             .input('dateGiven', sql.VarChar, dateGiven)
             .query(query.province)
-        res.send(provinceData.recordset)
+        res.send(JSON.stringify(provinceData.recordset))
     }
     catch (error) {
         res.status(500).send(error.message)
@@ -87,7 +88,7 @@ app.get('/provinceGraph',async(req,res)=>{
         .query(query.provinceGraph)
 
         //console.log(JSON.stringify(provinceData.recordset[0].split(':')))
-    res.send(provinceData.recordset)
+    res.send(JSON.stringify(provinceData.recordset))
 }
 catch (error) {
     res.status(500).send(error.message)
@@ -105,7 +106,7 @@ app.get('/allRegions', async (req, res) => {
         const regionalData = await pool.request()
             .input('dateGiven', sql.VarChar, dateGiven)
             .query(query.allRegions)
-        res.send(regionalData.recordset)
+        res.send(JSON.stringify(regionalData.recordset))
     }
     catch (error) {
         res.status(500).send(error.message)
@@ -127,7 +128,7 @@ app.get('/region', async (req, res) => {
             .input('regionName', sql.VarChar, regionName)
             .input('dateGiven', sql.VarChar, dateGiven)
             .query(query.region)
-        res.send(regionData.recordset)
+        res.send(JSON.stringify(regionData.recordset))
     }
     catch (error) {
         res.status(500).send(error.message)
@@ -149,7 +150,7 @@ app.get('/regionGraph', async (req, res) => {
             .input('regionName', sql.VarChar, regionName)
             .input('dateGiven', sql.VarChar, dateGiven)
             .query(query.regionGraph)
-        res.send(regionData.recordset)
+        res.send(JSON.stringify(regionData.recordset))
     }
     catch (error) {
         res.status(500).send(error.message)
@@ -158,25 +159,31 @@ app.get('/regionGraph', async (req, res) => {
 
 app.post('/feedback', async (req, res) => {
     try {
-        const name = req.body.name
+        const firstName = req.body.firstName
+        const lastName = req.body.lastName
         const email = req.body.emailId
         const comments = req.body.comments
-        if (name != null && email != null && comments != null) {
+        const country=req.body.country
+        if (firstName != null&&lastName != null&& email != null && comments != null) {
             if (!validator.isEmail(email)) {
+                console.log('email format is wrong')
                 throw Error('Email format is Invalid')
             }
             const pool = await poolPromise
             const feedback = await pool.request()
-                .input('name', sql.VarChar, name)
+                .input('firstName', sql.VarChar, firstName)
+                .input('lastName', sql.VarChar, lastName)
+                .input('country', sql.VarChar, country)
                 .input('email', sql.VarChar, email)
                 .input('comments', sql.VarBinary, comments)
                 .query(query.feedbackInput)
-            res.send(feedback)
+            res.send(JSON.stringify(feedback))
         } else {
             return new Error('Error : Please enter all the fields')
         }
     }
     catch (error) {
+        console.log(error)
         res.status(500).send(error.message)
     }
 })
@@ -204,7 +211,7 @@ app.get('/regionNames',async (req,res)=>{
     const regionNames = await pool.request()
         .query(query.regionNames)
     console.log(regionNames.recordsets)
-    res.send(regionNames)
+    res.send(JSON.stringify(regionNames))
 })
 
 app.get('/provinceNames',async (req,res)=>{
@@ -212,7 +219,7 @@ app.get('/provinceNames',async (req,res)=>{
     const provinceNames = await pool.request()
         .query(query.provinceNames)
     console.log(provinceNames.recordsets)
-    res.send(provinceNames)
+    res.send(JSON.stringify(provinceNames))
 })
 
 module.exports = app

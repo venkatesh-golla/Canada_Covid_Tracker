@@ -1,0 +1,104 @@
+.headerIcon {
+  margin-top: 10px;
+}
+
+.totalCases {
+  min-height: 20px;
+  padding: 19px;
+  margin-bottom: 20px;
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+  background-color: #d9d209;
+  color: white;
+  font-size: 120%;
+}
+
+.totalDeaths {
+  min-height: 20px;
+  padding: 19px;
+  margin-bottom: 20px;
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+  background-color: #7a280f;
+  color: white;
+  font-size: 120%;
+}
+
+.activeCases {
+  min-height: 20px;
+  padding: 19px;
+  margin-bottom: 20px;
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+  background-color: #326796;
+  color: white;
+  font-size: 120%;
+}
+
+.recoveredCases {
+  min-height: 20px;
+  padding: 19px;
+  margin-bottom: 20px;
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+  background-color: #198231;
+  color: white;
+  font-size: 120%;
+}
+
+.players {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 95%;
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: white;
+}
+
+#tableProvince td, #tableProvince th,#tableRegion td, #tableRegion th {
+  border: 1px solid black;
+  padding: 8px;
+}
+
+
+
+#tableProvince tr:nth-child(even),#tableRegion tr:nth-child(even)  {
+  background-color: #f2f2f2;
+}
+
+
+#tableProvince tr:hover,#tableRegion tr:hover {
+  background-color: #ddd;
+}
+
+#tableHeadProvince th ,#tableHeadRegion th{
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #333;
+  color: white;
+}
+
+
+#tableHeading {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  color: #333;
+  font-weight: bolder;
+  text-align: leftwards;
+  margin-left: 20px;
+}
+
+footer {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  background-color: #333;
+  padding: 25px;
+  color: white;
+}
