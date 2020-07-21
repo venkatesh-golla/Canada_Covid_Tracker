@@ -1,17 +1,23 @@
+var provinceNamesFromDb=[]
+
 document.addEventListener('DOMContentLoaded', (e)=> {
     e.preventDefault()
+    provinceNames((names)=>{
+        names.forEach(name => {
+            provinceNamesFromDb.push(name)
+        });
+    })
     const dateGiven=null
     fetch(dateGiven ? `/allProvinces?date=${dateGiven}`: `/allProvinces`).then((response) => {
         response.json().then((data) => {
             if (data.error) {
-                console.log('Error from Js')
+                swal('Error','Something Went Wrong Please try again','error')
             }
             else if (data == undefined||null) {
-                console.log('No data found for province in database')
+                swal('Sorry','No data found for Province','warning')
             }
             else {
                 //const dataJson=JSON.parse(data)
-                console.log(data)
                 tableFunction(data,"tableProvince","tableBodyProvince")
             }
         })
@@ -22,25 +28,44 @@ document.addEventListener('DOMContentLoaded', (e)=> {
 document.querySelector('#provinceSubmitButton').addEventListener('click', (e) => {
     e.preventDefault()
     const dateGiven = document.querySelector('#datePickerProvince').value
-    const provinceName = document.querySelector('#provinceName').value.toString()
+    const provinceName = document.querySelector('#provinceName').value.trim().toLowerCase().toString()
+    const letters = /^[A-Za-z, ]+$/;
     var totalCases=document.querySelector('#totalCases')
     var totalDeaths=document.querySelector('#totalDeaths')
     var activeCases=document.querySelector('#activeCases')
     var recoveredCases=document.querySelector('#recoveredCases')
     var searchProvinceValue=document.querySelector('#searchProvinceValue')
-    if (provinceName) {
+    if(provinceName==""){
+        provinceReset()
+        return swal('Province name has not been entered')
+    }
+    else if(!provinceName.match(letters)){
+        provinceReset()
+        return swal('Province name should contain only letters')
+    }
+    else if(dateGiven){
+        if(dateGiven>moment().format('YYYY-MM-DD')){
+            provinceReset()
+            return swal('No future dates please')
+        }
+    }
+    else if(!provinceNamesFromDb.includes(provinceName)){
+        provinceReset()
+        return swal('Please enter a valid province name')
+    }
+    else{
         fetch(dateGiven ? `/province?date=${dateGiven}&provinceName=${provinceName}` : `/province?provinceName=${provinceName}`).then((response) => {
             response.json().then((data) => {
                 if (data.error) {
-                    console.log('Error from Js')
+                    provinceReset()
+                    return swal('Error','Something Went Wrong Please try again','error')
                 }
-                else if (data == undefined) {
-                    console.log('No data found for province in database')
+                else if (data[0] == undefined) {
+                    provinceReset()
+                   return swal('Sorry','No data found for Province','warning')
                 }
                 else {
                     provinceData=data[0]
-                    console.log(data[0])
-                    console.log(provinceData['TotalConfirmed'])
                     totalCases.innerHTML=provinceData['TotalConfirmed'].toString()
                     totalDeaths.innerHTML=provinceData['TotalDeath'].toString()
                     activeCases.innerHTML=provinceData['ActiveCases'].toString()
@@ -50,13 +75,12 @@ document.querySelector('#provinceSubmitButton').addEventListener('click', (e) =>
             })
         })
     }
-    else {
-        console.log('RegionName has not been entered')
-    }
 
 })
 
 const provinceReset=()=>{
+    datePickerProvince.value=''
+    provinceName.value=''
     totalCases.innerHTML=''
     totalDeaths.innerHTML=''
     activeCases.innerHTML=''

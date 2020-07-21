@@ -1,29 +1,36 @@
-document.addEventListener('DOMContentLoaded', (e)=> {
+var regionNamesFromDb = []
+document.addEventListener('DOMContentLoaded', (e) => {
     e.preventDefault()
-    const dateGiven=null
-    fetch(dateGiven?`/allRegions?date=${dateGiven}`:`/allRegions`).then((response)=>{
-        response.json().then((data)=>{
+    regionNames((names) => {
+        names.forEach(name => {
+            regionNamesFromDb.push(name)
+        });
+    })
+    const dateGiven = null
+    fetch(dateGiven ? `/allRegions?date=${dateGiven}` : `/allRegions`).then((response) => {
+        response.json().then((data) => {
             if (data.error) {
-                console.log('Error from Js')
+                swal('Error', 'Something Went Wrong Please try again', 'error')
             }
             else if (data == undefined) {
-                console.log('No data found for province in database')
+                swal('Sorry', 'No data found for region', 'warning')
             }
             else {
-                console.log(data)
-                tableFunction(data,"tableRegion","tableBodyRegion")
+                tableFunction(data, "tableRegion", "tableBodyRegion")
             }
         })
     })
+
 }, false);
 
 
 document.querySelector('#sendLocation').addEventListener('click', (e) => {
     e.preventDefault()
-    provinceReset()
+    regionReset()
     if (!navigator.geolocation) {
         document.querySelector('#sendLocation').setAttribute('disabled', 'disabled')
-        return alert('GeoLocation is not supported by your browser. Please enter your place in the above form')
+        return swal('Sorry', 'GeoLocation is not supported by your browser. Please enter your place in the above form', 'warning')
+        //return swal('GeoLocation is not supported by your browser. Please enter your place in the above form')
     }
     navigator.geolocation.getCurrentPosition((position) => {
         console.log(`Longitude :${position.coords.longitude} Latitude :${position.coords.latitude}`)
@@ -32,6 +39,7 @@ document.querySelector('#sendLocation').addEventListener('click', (e) => {
             response.json().then((data) => {
                 if (data.error) {
                     console.log('Error :' + data.error)
+                    swal('Error', 'Something Went Wrong Please try again', 'error')
                 }
                 else {
                     try {
@@ -42,18 +50,19 @@ document.querySelector('#sendLocation').addEventListener('click', (e) => {
                             response.json().then((data) => {
                                 if (data.error) {
                                     console.log('Error from Js')
+                                    swal('Error', 'Something Went Wrong Please try again', 'error')
                                 }
                                 else if (data[0] == undefined) {
-                                    console.log('No data found for region in database')
+                                    swal('Sorry', 'No data found for region', 'warning')
                                 }
                                 else {
-                                    regionData=data[0]
+                                    regionData = data[0]
                                     console.log(data[0])
-                                    totalCases.innerHTML=regionData['TotalConfirmed'].toString()
-                                    totalDeaths.innerHTML=regionData['TotalDeath'].toString()
-                                    activeCases.innerHTML=regionData['ActiveCases'].toString()
-                                    recoveredCases.innerHTML=regionData['TotalRecovered'].toString()
-                                    searchRegionValue.innerHTML=regionData['Name'].toString()
+                                    totalCases.innerHTML = regionData['TotalConfirmed'].toString()
+                                    totalDeaths.innerHTML = regionData['TotalDeath'].toString()
+                                    activeCases.innerHTML = regionData['ActiveCases'].toString()
+                                    recoveredCases.innerHTML = regionData['TotalRecovered'].toString()
+                                    searchRegionValue.innerHTML = regionData['Name'].toString()
                                 }
                             })
                         })
@@ -75,43 +84,58 @@ document.querySelector('#sendLocation').addEventListener('click', (e) => {
 
 document.querySelector('#regionSubmitButton').addEventListener('click', (e) => {
     e.preventDefault()
-    provinceReset()
-    const dateGiven = document.querySelector('#datePickerRegion').value
-    const regionName = document.querySelector('#regionName').value.toString()
-    if (regionName) {
+    const dateGiven = document.querySelector('#datePickerRegion').value.trim()
+    const regionName = document.querySelector('#regionName').value.trim().toLowerCase().toString()
+    const letters = /^[A-Za-z, ]+$/
+    if (regionName == "") {
+        regionReset()
+        return swal('Region Name has not been entered')
+    }
+    else if (!regionName.match(letters)) {
+        regionReset()
+        return swal('Region name should contain only letters')
+    }
+    else if (dateGiven > moment().format('YYYY-MM-DD')) {
+        regionReset()
+        return swal('No future dates please')
+    }
+    else if (!regionNamesFromDb.includes(regionName)) {
+        regionReset()
+        return swal('Please enter a valid region name')
+    }
+    else {
         fetch(dateGiven ? `/region?date=${dateGiven}&regionName=${regionName}` : `/region?regionName=${regionName}`).then((response) => {
             response.json().then((data) => {
                 if (data.error) {
-                    console.log('Error from Js')
+                    swal('Error', 'Error from Js', 'error')
                 }
                 else if (data[0] == undefined) {
-                    console.log('No data found for province in database')
+                    swal('Sorry', 'No data found for region', 'warning')
                 }
                 else {
-                    regionData=data[0]
+                    regionData = data[0]
                     console.log(data[0])
-                    totalCases.innerHTML=regionData['TotalConfirmed'].toString()
-                    totalDeaths.innerHTML=regionData['TotalDeath'].toString()
-                    activeCases.innerHTML=regionData['ActiveCases'].toString()
-                    recoveredCases.innerHTML=regionData['TotalRecovered'].toString()
-                    searchRegionValue.innerHTML=regionData['Name'].toString()
+                    totalCases.innerHTML = regionData['TotalConfirmed'].toString()
+                    totalDeaths.innerHTML = regionData['TotalDeath'].toString()
+                    activeCases.innerHTML = regionData['ActiveCases'].toString()
+                    recoveredCases.innerHTML = regionData['TotalRecovered'].toString()
+                    searchRegionValue.innerHTML = regionData['Name'].toString()
 
                 }
             })
         })
     }
-    else {
-        console.log('RegionName has not been entered')
-    }
 
 })
 
-const regionReset=()=>{
-    totalCases.innerHTML=''
-    totalDeaths.innerHTML=''
-    activeCases.innerHTML=''
-    recoveredCases.innerHTML=''
-    searchRegionValue.innerHTML=''
+const regionReset = () => {
+    regionName.value = ''
+    datePickerRegion.value = ''
+    totalCases.innerHTML = ''
+    totalDeaths.innerHTML = ''
+    activeCases.innerHTML = ''
+    recoveredCases.innerHTML = ''
+    searchRegionValue.innerHTML = ''
 }
 
 // document.querySelector('#allRegionsButton').addEventListener('click',(e)=>{
@@ -121,6 +145,7 @@ const regionReset=()=>{
 //         response.json().then((data)=>{
 //             if (data.error) {
 //                 console.log('Error from Js')
+//                  swal('Error','Something Went Wrong Please try again','error')
 //             }
 //             else if (data == undefined) {
 //                 console.log('No data found for province in database')

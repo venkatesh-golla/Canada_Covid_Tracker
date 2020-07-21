@@ -27,17 +27,23 @@
 			}
 		}
 		.graphContainer{
+			padding-left: 5%;
 			float: left;
-			width: 600px;
-			height: 600px;
+			width: 500px;
+			height: 500px;
 		}
 		.graphCountryContainer{
+			padding-right: 5%;
 			float: right;
-			width: 600px;
-			height: 700px;
+			width: 500px;
+			height: 500px;
 		}
 		.regionHeading{
 			margin-left: 60px;
+		}
+		.pGraph{
+			border: 1px solid rgb(198, 206, 176);
+			background-color:  rgb(166, 219, 43);
 		}
 	</style>
 </head>
@@ -72,7 +78,7 @@
 		<div class="row">
 			<div class="col-sm-4">
 				<div>
-					<label for="dateSelect">Search Region</label>
+					<label for="searchRegionGraph">Search Region</label>
 					<input type="text" name="search" placeholder="Search.." id="searchRegionGraph">
 				</div>
 			</div>
@@ -93,7 +99,7 @@
 		<hr>
 	</div>
 
-	<div class="container text-center">
+	<!-- <div class="container text-center">
 		<h2 id="tableHeading" text-align="leftwards">Coronavirus disease 2019 (COVID-19) - <p id="searchProvinceValue">
 			</p>
 		</h2>
@@ -123,13 +129,21 @@
 				</p>
 			</div>
 		</div>
+	</div> -->
+	<div class="container">
+		<div class="col-sm-6">
+			<p class="pGraph" id="regionParagraph" style="padding-left: 5%; float:left; display: none;">Last 5 Days graph for cases growth in Region: </p>
+		</div>
+		<div class="col-sm-6">
+			<p class="pGraph" style="padding-right: 5%;float: right;">Last 5 Days graph for cases growth in Canada </p>
+		</div>
 	</div>
 	<div class="row">
 		<div class="graphContainer" id="graphContainer">
-			<canvas id="graphCanvas" style="width: 600px;height: 600px;"></canvas>
+			<canvas id="graphCanvas" style="width: 400px;height: 400px;"></canvas>
 		</div>
 		<div class="graphCountryContainer" id="graphCountryContainer">
-			<canvas id="graphCountryCanvas" style="width: 600px;height: 600px;"></canvas>
+			<canvas id="graphCountryCanvas" style="width: 400px;height: 400px;"></canvas>
 		</div>
 	</div>
 
@@ -142,8 +156,11 @@
 		<p>&copy; Regional COVID-19 Information Website 2020</p>
 		</p>
 	</footer>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>\
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.0-alpha/Chart.js"></script>
 	<script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js></script>
+	<script src="./js/functions.js"></script>
 	<script src="./js/graph.js"></script>
 
 </body>

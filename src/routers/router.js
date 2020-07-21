@@ -4,7 +4,7 @@ const moment = require('moment')
 const locationName = require('../utils/location')
 const validator = require('validator')
 const query = require('../models/queries.json')
-const Nexmo=require('nexmo')
+const Nexmo = require('nexmo')
 const app = new express.Router()
 
 
@@ -31,8 +31,8 @@ app.get('/country', async (req, res) => {
 
 })
 
-app.get('/countryGraph',async(req,res)=>{
-    try{
+app.get('/countryGraph', async (req, res) => {
+    try {
         const pool = await poolPromise
         var dateGiven = req.query.date
         const countryName = 'Canada'
@@ -43,16 +43,16 @@ app.get('/countryGraph',async(req,res)=>{
             dateGiven = '2020-07-06'  //moment().format('YYYY-MM-DD')
         }
         const countryData = await pool.request()
-        .input('countryName', sql.VarChar, countryName)
-        .input('dateGiven', sql.VarChar, dateGiven)
-        .query(query.countryGraph)
+            .input('countryName', sql.VarChar, countryName)
+            .input('dateGiven', sql.VarChar, dateGiven)
+            .query(query.countryGraph)
 
         //console.log(JSON.stringify(provinceData.recordset[0].split(':')))
-    res.send(JSON.stringify(countryData.recordset))
-}
-catch (error) {
-    res.status(500).send(error.message)
-}
+        res.send(JSON.stringify(countryData.recordset))
+    }
+    catch (error) {
+        res.status(500).send(error.message)
+    }
 
 })
 
@@ -66,7 +66,6 @@ app.get('/allProvinces', async (req, res) => {
         const provinceData = await pool.request()
             .input('dateGiven', sql.VarChar, dateGiven)
             .query(query.allProvinces)
-            console.log
         res.send(JSON.stringify(provinceData.recordset))
     }
     catch (error) {
@@ -96,8 +95,8 @@ app.get('/province', async (req, res) => {
     }
 })
 
-app.get('/provinceGraph',async(req,res)=>{
-    try{
+app.get('/provinceGraph', async (req, res) => {
+    try {
         const pool = await poolPromise
         var dateGiven = req.query.date
         const provinceName = 'Alberta'
@@ -108,16 +107,16 @@ app.get('/provinceGraph',async(req,res)=>{
             dateGiven = '2020-07-06'  //moment().format('YYYY-MM-DD')
         }
         const provinceData = await pool.request()
-        .input('provinceName', sql.VarChar, provinceName)
-        .input('dateGiven', sql.VarChar, dateGiven)
-        .query(query.provinceGraph)
+            .input('provinceName', sql.VarChar, provinceName)
+            .input('dateGiven', sql.VarChar, dateGiven)
+            .query(query.provinceGraph)
 
         //console.log(JSON.stringify(provinceData.recordset[0].split(':')))
-    res.send(JSON.stringify(provinceData.recordset))
-}
-catch (error) {
-    res.status(500).send(error.message)
-}
+        res.send(JSON.stringify(provinceData.recordset))
+    }
+    catch (error) {
+        res.status(500).send(error.message)
+    }
 
 })
 
@@ -188,8 +187,8 @@ app.post('/feedback', async (req, res) => {
         const lastName = req.body.lastName
         const emailId = req.body.emailId
         const comments = req.body.comments
-        const country=req.body.country
-        if (firstName != null&&lastName != null&& emailId != null && comments != null) {
+        const country = req.body.country
+        if (firstName != null && lastName != null && emailId != null && comments != null) {
             if (!validator.isEmail(emailId)) {
                 console.log('email format is wrong')
                 throw Error('Email format is Invalid')
@@ -231,7 +230,7 @@ app.get('/location', (req, res) => {
     })
 })
 
-app.get('/regionNames',async (req,res)=>{
+app.get('/regionNames', async (req, res) => {
     const pool = await poolPromise
     const regionNames = await pool.request()
         .query(query.regionNames)
@@ -239,12 +238,18 @@ app.get('/regionNames',async (req,res)=>{
     res.send(JSON.stringify(regionNames))
 })
 
-app.get('/provinceNames',async (req,res)=>{
+app.get('/provinceNames', async (req, res) => {
     const pool = await poolPromise
     const provinceNames = await pool.request()
         .query(query.provinceNames)
     console.log(provinceNames.recordsets)
     res.send(JSON.stringify(provinceNames))
 })
+
+const nexmo = new Nexmo({
+    apiKey: 'c6d88d7d',
+    apiSecret: 'JbfSR3MQAfYgRM29',
+}, { debug: true })
+
 
 module.exports = app

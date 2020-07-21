@@ -1,40 +1,40 @@
-const regionNames = ()=>{
-    fetch('/regionNames').then((response)=>{
-        response.json().then((data)=>{
-            if(data.error){
+var regionNames = (callback) => {
+    fetch('/regionNames').then((response) => {
+        response.json().then((data) => {
+            if (data.error) {
                 console.log('Unable to fetch region Names')
             }
-            else if(data==null){
+            else if (data == null) {
                 console.log('No region Names fetched')
             }
-            else{
+            else {
                 const dataArray = data.recordsets[0]
-                const regionNamesArray =[]
+                const regionNamesArray = []
                 dataArray.forEach(element => {
-                    regionNamesArray.push(element["Name"])
+                    regionNamesArray.push(element["Name"].toLowerCase())
                 });
-                console.log(regionNamesArray)
+                callback(Object.values(regionNamesArray))
             }
         })
     })
 }
 
-const provinceNames = ()=>{
-    fetch('/provinceNames').then((response)=>{
-        response.json().then((data)=>{
-            if(data.error){
+var provinceNames = (callback)=> {
+    fetch('/provinceNames').then((response) => {
+        response.json().then((data) => {
+            if (data.error) {
                 console.log('Unable to fetch province Names')
             }
-            else if(data==null){
-                console.log('No province Names fetched')
+            else if (data == null) {
+                console.log('No province Names fetched') 
             }
-            else{
+            else {
                 const dataArray = data.recordsets[0]
-                const provinceNamesArray =[]
+                const provinceNamesArray = []
                 dataArray.forEach(element => {
-                    provinceNamesArray.push(element["Name"])
+                    provinceNamesArray.push(element["Name"].toLowerCase())
                 });
-                console.log(provinceNamesArray)
+                callback(Object.values(provinceNamesArray)) 
             }
         })
     })
