@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>COVID-19 Website - Home Page</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="./images/browserIcon.png" type="image" sizes="16x16">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -16,111 +18,138 @@
     }
 
     .carousel-inner img {
-      width: 100%; /* Set width to 100% */
+      width: 100%;
+      /* Set width to 100% */
       min-height: 200px;
     }
 
     /* Hide the carousel text when the screen is less than 600 pixels wide */
     @media (max-width: 600px) {
       .carousel-caption {
-        display: none; 
+        display: none;
       }
     }
   </style>
 </head>
+
 <body>
 
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <div class="headerIcon">
-			  <img src="https://image.flaticon.com/icons/png/512/2760/2760147.png" width="30" height="30">
-		</div>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-			  <ul class="nav navbar-nav">
-				<li class="active"><a href="#">Home</a></li>
-				<li><a href="province.html">Provinces</a></li>
-				<li><a href="region.html">Regions</a></li>
-				<li><a href="graph.html">Graphs</a></li>
-				<li><a href="feedback.html">Feedback</a></li>
-				<li><a href="about.html">About Us</a></li>
-			  </ul>
-			</div>
-  </div>
-</nav>
-
-<div class="container">
-<div class="row">
-  <div class="col-sm-8">
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-      <!-- Indicators -->
-      <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-		<li data-target="#myCarousel" data-slide-to="2"></li>
-		<li data-target="#myCarousel" data-slide-to="3"></li>
-      </ol>
-
-      <!-- Wrapper for slides -->
-      <div class="carousel-inner" role="listbox">
-        <div class="item active">
-          <img src="https://d36zfg4d500s0g.cloudfront.net/cache/images/DT/up/dt/2020/03/COVID19-Canadian-Dental-Association-says-situation-is-changing-rapidly-1188x668-.jpg" alt="Image">    
-        </div>
-
-        <div class="item">
-          <img src="https://assets.change.org/photos/7/ep/mj/lcEPmjrqYjORgdh-800x450-noPad.jpg?1585756311" alt="Image">    
-        </div>
-		
-		<div class="item">
-          <img src="https://www.iheartradio.ca/image/policy:1.10728530:1584115033/covid-19.png?f=default&$p$f=7c255d3" alt="Image">     
-        </div>
-		
-		<div class="item">
-          <img src="https://shawglobalnews.files.wordpress.com/2020/06/23324214-e1592070361537.jpg?quality=85&strip=all" alt="Image">     
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <div class="headerIcon">
+          <img src="https://image.flaticon.com/icons/png/512/2760/2760147.png" width="30" height="30">
         </div>
       </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="province.html">Provinces</a></li>
+          <li><a href="region.html">Regions</a></li>
+          <li><a href="graph.html">Graphs</a></li>
+          <li><a href="feedback.html">Feedback</a></li>
+          <li><a href="about.html">About Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-      <!-- Left and right controls -->
-      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="well2">
-      <a href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection.html?&utm_campaign=gc-hc-sc-coronavirus2021-ao-2021-0005-10020125402&utm_medium=search&utm_source=google-ads-107800103024&utm_content=text-en-434525470053&utm_term=covid#a2"><p>How Canada is monitoring COVID-19?</p></a>
-    </div>
-    <div class="well2">
-       <a href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/symptoms.html"><p>Symptoms and Treatment</p></a>
-    </div>
-    <div class="well2">
-       <a href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/prevention-risks.html"><p>Prevention and Risks</p></a>
-    </div>
-	 <div class="well2">
-       <a href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/latest-travel-health-advice.html"><p>Travel Restrictions</p></a>
-    </div>
-	 <div class="well2">
-       <a href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/prevention-risks/measures-reduce-community.html"><p>Measures to reduce COVID-19</p></a>
-    </div>
-  </div>
-</div>
-<hr>
-</div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-8">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+          <!-- Indicators -->
+          <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+            <li data-target="#myCarousel" data-slide-to="3"></li>
+          </ol>
 
-		<footer class="footerClass text-center">
-		  <p><p>&copy; Regional COVID-19 Information Website 2020</p></p>
-		</footer>
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+            <div class="item active">
+              <img
+                src="https://d36zfg4d500s0g.cloudfront.net/cache/images/DT/up/dt/2020/03/COVID19-Canadian-Dental-Association-says-situation-is-changing-rapidly-1188x668-.jpg"
+                alt="Image">
+            </div>
+
+            <div class="item">
+              <img src="https://assets.change.org/photos/7/ep/mj/lcEPmjrqYjORgdh-800x450-noPad.jpg?1585756311"
+                alt="Image">
+            </div>
+
+            <div class="item">
+              <img
+                src="https://www.iheartradio.ca/image/policy:1.10728530:1584115033/covid-19.png?f=default&$p$f=7c255d3"
+                alt="Image">
+            </div>
+
+            <div class="item">
+              <img
+                src="https://shawglobalnews.files.wordpress.com/2020/06/23324214-e1592070361537.jpg?quality=85&strip=all"
+                alt="Image">
+            </div>
+          </div>
+
+          <!-- Left and right controls -->
+          <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="well2">
+          <a
+            href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection.html?&utm_campaign=gc-hc-sc-coronavirus2021-ao-2021-0005-10020125402&utm_medium=search&utm_source=google-ads-107800103024&utm_content=text-en-434525470053&utm_term=covid#a2" target="_blank">
+            <p>How Canada is monitoring COVID-19?</p>
+          </a>
+        </div>
+        <div class="well2">
+          <a
+            href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/symptoms.html" target="_blank">
+            <p>Symptoms and Treatment</p>
+          </a>
+        </div>
+        <div class="well2">
+          <a
+            href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/prevention-risks.html" target="_blank">
+            <p>Prevention and Risks</p>
+          </a>
+        </div>
+        <div class="well2">
+          <a
+            href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/latest-travel-health-advice.html" target="_blank">
+            <p>Travel Restrictions</p>
+          </a>
+        </div>
+        <div class="well2">
+          <a
+            href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/prevention-risks/measures-reduce-community.html" target="_blank">
+            <p>Measures to reduce COVID-19</p>
+          </a>
+        </div>
+      </div>
+    </div>
+    <hr>
+  </div>
+
+  <footer class="footerClass text-center">
+    <p>
+    <p>&copy; Regional COVID-19 Information Website 2020</p>
+    </p>
+  </footer>
 
 </body>
+
 </html>

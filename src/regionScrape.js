@@ -3,7 +3,6 @@ const cheerio = require('cheerio')
 const axios = require('axios')
 const sql = require("mssql/msnodesqlv8");
 const moment=require("moment")
-const { response } = require('express');
 
 //config for your database
 const config = {
@@ -30,7 +29,7 @@ var Recovered = [];
 var Deaths = [];
 var deathsPerMillion = [];
 
-const scrappingFunction = async () => {
+const scrappingOntario = async () => {
     await axios.get('https://en.wikipedia.org/w/index.php?title=COVID-19_pandemic_in_Ontario').then(async (response) => {
         console.log('start of scrapping')
         // Load the web page source code into a cheerio instance
@@ -64,7 +63,7 @@ const scrappingFunction = async () => {
         insertCases()
 }
 
-scrappingFunction()
+scrappingOntario()
 const insertRegions = async function () {
     publicHealthUnit.forEach(async (healthUnit) => {
         var regionInsert = "insert into Region (Name, ProvinceId) OUTPUT inserted.ID VALUES( @RegionName, @ProvinceId)";
@@ -101,7 +100,6 @@ const insertCases = async function () {
         const regionCasesInput = await pool.request()
             .input('RegionName', sql.VarChar, publicHealthUnit[i])
             .query(regionIDSelect)
-        console.log(regionCasesInput.recordset[0].ID)
 
 
         const regionId_RegionCase=regionCasesInput.recordset[0].ID

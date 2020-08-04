@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
             }
             else {
                 tableFunction(data, "tableRegion", "tableBodyRegion")
+                dateToday.innerHTML=moment().format('DD-MM-YYYY')
             }
         })
     })
@@ -86,7 +87,7 @@ document.querySelector('#regionSubmitButton').addEventListener('click', (e) => {
     e.preventDefault()
     const dateGiven = document.querySelector('#datePickerRegion').value.trim()
     const regionName = document.querySelector('#regionName').value.trim().toLowerCase().toString()
-    const letters = /^[A-Za-z, ]+$/
+    const letters = /^[A-Za-z-&/(/) ]+$/
     if (regionName == "") {
         regionReset()
         return swal('Region Name has not been entered')
@@ -99,10 +100,10 @@ document.querySelector('#regionSubmitButton').addEventListener('click', (e) => {
         regionReset()
         return swal('No future dates please')
     }
-    else if (!regionNamesFromDb.includes(regionName)) {
-        regionReset()
-        return swal('Please enter a valid region name')
-    }
+    // else if (!regionNamesFromDb.includes(regionName)) {
+    //     regionReset()
+    //     return swal('Please enter a valid region name')
+    // }
     else {
         fetch(dateGiven ? `/region?date=${dateGiven}&regionName=${regionName}` : `/region?regionName=${regionName}`).then((response) => {
             response.json().then((data) => {

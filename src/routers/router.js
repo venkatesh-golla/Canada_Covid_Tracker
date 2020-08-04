@@ -13,7 +13,7 @@ app.get('/country', async (req, res) => {
         const pool = await poolPromise
         var dateGiven = req.query.date
         if (dateGiven == null) {
-            dateGiven = '2020-07-06'  //moment().format('YYYY-MM-DD')
+            dateGiven = moment().format('YYYY-MM-DD')
         }
         var countryName = req.query.countryName
         if (countryName == null) {
@@ -40,13 +40,12 @@ app.get('/countryGraph', async (req, res) => {
             throw new Error(`Error: Country Name is required`)
         }
         if (dateGiven == null) {
-            dateGiven = '2020-07-06'  //moment().format('YYYY-MM-DD')
+            dateGiven = moment().format('YYYY-MM-DD')
         }
         const countryData = await pool.request()
             .input('countryName', sql.VarChar, countryName)
             .input('dateGiven', sql.VarChar, dateGiven)
             .query(query.countryGraph)
-
         //console.log(JSON.stringify(provinceData.recordset[0].split(':')))
         res.send(JSON.stringify(countryData.recordset))
     }
@@ -61,7 +60,7 @@ app.get('/allProvinces', async (req, res) => {
         const pool = await poolPromise
         var dateGiven = req.query.date
         if (dateGiven == null) {
-            dateGiven = '2020-07-06'  //moment().format('YYYY-MM-DD')
+            dateGiven = moment().format('YYYY-MM-DD')
         }
         const provinceData = await pool.request()
             .input('dateGiven', sql.VarChar, dateGiven)
@@ -82,7 +81,7 @@ app.get('/province', async (req, res) => {
             throw new Error(`Error: ProvinceName is required`)
         }
         if (dateGiven == null) {
-            dateGiven = '2020-07-06'  //moment().format('YYYY-MM-DD')
+            dateGiven = moment().format('YYYY-MM-DD')
         }
         const provinceData = await pool.request()
             .input('provinceName', sql.VarChar, provinceName)
@@ -104,7 +103,7 @@ app.get('/provinceGraph', async (req, res) => {
             throw new Error(`Error: ProvinceName is required`)
         }
         if (dateGiven == null) {
-            dateGiven = '2020-07-06'  //moment().format('YYYY-MM-DD')
+            dateGiven = moment().format('YYYY-MM-DD')
         }
         const provinceData = await pool.request()
             .input('provinceName', sql.VarChar, provinceName)
@@ -125,7 +124,7 @@ app.get('/allRegions', async (req, res) => {
         const pool = await poolPromise
         var dateGiven = req.query.date
         if (dateGiven == null) {
-            dateGiven = '2020-07-06'  //moment().format('YYYY-MM-DD')
+            dateGiven =  moment().format('YYYY-MM-DD')
         }
         const regionalData = await pool.request()
             .input('dateGiven', sql.VarChar, dateGiven)
@@ -146,8 +145,9 @@ app.get('/region', async (req, res) => {
             throw new Error('Error: Region name is required')
         }
         if (dateGiven == null) {
-            dateGiven = '2020-07-06'  //moment().format('YYYY-MM-DD')
+            dateGiven = moment().format('YYYY-MM-DD')  
         }
+        
         const regionData = await pool.request()
             .input('regionName', sql.VarChar, regionName)
             .input('dateGiven', sql.VarChar, dateGiven)
@@ -168,7 +168,7 @@ app.get('/regionGraph', async (req, res) => {
             throw new Error('Error: Region name is required')
         }
         if (dateGiven == null) {
-            dateGiven = '2020-07-06'  //moment().format('YYYY-MM-DD')
+            dateGiven =moment().format('YYYY-MM-DD')
         }
         const regionData = await pool.request()
             .input('regionName', sql.VarChar, regionName)
@@ -190,7 +190,6 @@ app.post('/feedback', async (req, res) => {
         const country = req.body.country
         if (firstName != null && lastName != null && emailId != null && comments != null) {
             if (!validator.isEmail(emailId)) {
-                console.log('email format is wrong')
                 throw Error('Email format is Invalid')
             }
             const pool = await poolPromise
@@ -207,7 +206,6 @@ app.post('/feedback', async (req, res) => {
         }
     }
     catch (error) {
-        console.log(error)
         res.status(500).send(error.message)
     }
 })
@@ -234,7 +232,6 @@ app.get('/regionNames', async (req, res) => {
     const pool = await poolPromise
     const regionNames = await pool.request()
         .query(query.regionNames)
-    console.log(regionNames.recordsets)
     res.send(JSON.stringify(regionNames))
 })
 
@@ -242,7 +239,6 @@ app.get('/provinceNames', async (req, res) => {
     const pool = await poolPromise
     const provinceNames = await pool.request()
         .query(query.provinceNames)
-    console.log(provinceNames.recordsets)
     res.send(JSON.stringify(provinceNames))
 })
 

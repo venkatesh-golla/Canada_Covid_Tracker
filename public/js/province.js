@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', (e)=> {
         });
     })
     const dateGiven=null
+    const dateToday = document.querySelector('#dateToday')
     fetch(dateGiven ? `/allProvinces?date=${dateGiven}`: `/allProvinces`).then((response) => {
         response.json().then((data) => {
             if (data.error) {
@@ -19,6 +20,7 @@ document.addEventListener('DOMContentLoaded', (e)=> {
             else {
                 //const dataJson=JSON.parse(data)
                 tableFunction(data,"tableProvince","tableBodyProvince")
+                dateToday.innerHTML=moment().format('DD-MM-YYYY')
             }
         })
     })
@@ -29,7 +31,7 @@ document.querySelector('#provinceSubmitButton').addEventListener('click', (e) =>
     e.preventDefault()
     const dateGiven = document.querySelector('#datePickerProvince').value
     const provinceName = document.querySelector('#provinceName').value.trim().toLowerCase().toString()
-    const letters = /^[A-Za-z, ]+$/;
+    const letters = /^[A-Za-z-&/(/) ]+$/
     var totalCases=document.querySelector('#totalCases')
     var totalDeaths=document.querySelector('#totalDeaths')
     var activeCases=document.querySelector('#activeCases')
@@ -43,16 +45,14 @@ document.querySelector('#provinceSubmitButton').addEventListener('click', (e) =>
         provinceReset()
         return swal('Province name should contain only letters')
     }
-    else if(dateGiven){
-        if(dateGiven>moment().format('YYYY-MM-DD')){
-            provinceReset()
-            return swal('No future dates please')
-        }
+    else if (dateGiven > moment().format('YYYY-MM-DD')) {
+        regionReset()
+        return swal('No future dates please')
     }
-    else if(!provinceNamesFromDb.includes(provinceName)){
-        provinceReset()
-        return swal('Please enter a valid province name')
-    }
+    // else if(!provinceNamesFromDb.includes(provinceName)){
+    //     provinceReset()
+    //     return swal('Please enter a valid province name')
+    // }
     else{
         fetch(dateGiven ? `/province?date=${dateGiven}&provinceName=${provinceName}` : `/province?provinceName=${provinceName}`).then((response) => {
             response.json().then((data) => {
@@ -66,6 +66,7 @@ document.querySelector('#provinceSubmitButton').addEventListener('click', (e) =>
                 }
                 else {
                     provinceData=data[0]
+                    console.log(provinceData)
                     totalCases.innerHTML=provinceData['TotalConfirmed'].toString()
                     totalDeaths.innerHTML=provinceData['TotalDeath'].toString()
                     activeCases.innerHTML=provinceData['ActiveCases'].toString()

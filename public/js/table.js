@@ -8,7 +8,6 @@ const tableFunction=(data,tableId,tableBodyId)=>{
             tempbody += "<td>" + element.TotalDeath + "</td>"
             tempbody += "<td>" + element.TotalRecovered + "</td>"
             tempbody += "<td>" + element.ActiveCases + "</td>"
-            tempbody += "<td>" + element.DateTime.slice(0, 10) + "</td>"
             tempbody += "<td>" + element.Source + "</td>"
             tempbody += "</tr>"
         })
