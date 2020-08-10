@@ -7,7 +7,7 @@ const config = {
     password: process.env.password,
     driver: 'msnodesqlv8',
     server: 'localhost',
-    database: 'Covid19',
+    database: 'Covid',
     options: { "enableArithAbort": true,trustedConnection:true }
 };
 

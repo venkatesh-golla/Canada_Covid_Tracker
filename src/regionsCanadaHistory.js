@@ -6,13 +6,12 @@ var config = {
   server: "localhost",
   user: "sa",
   password: "Venky123!@#",
-  database: "Covid19",
+  database: "Covid",
   "options": {
     "encrypt": true,
     "enableArithAbort": true
     }
 };
-
 // create pool
 
 const poolPromise =new sql.ConnectionPool(config)
@@ -42,7 +41,7 @@ const countryWorld = async (callback)=>
         // Load the web page source code into a cheerio instance
         const $ = cheerio.load(response.data)
 
-        const regionCases = $('table.wikitable.sortable tbody').first().find('tr').each( (index, element) => {
+        const countryCases = $('table.wikitable.sortable tbody').first().find('tr').each( (index, element) => {
             
             countries.push($($(element).find('th')[1]).text().trim().replace(/\[.*?\]/gi, ''));
             cases.push($($(element).find('td')[0]).text().trim().replace(/,/g, '').replace(/No data/gi, ''));
@@ -189,7 +188,7 @@ const provinceCanada = async (callback)=>
         // Load the web page source code into a cheerio instance
         const $ = cheerio.load(response.data)
 
-        const regionCases = $('table.wikitable.sortable tbody').first().find('tr').each( (index, element) => {
+        const provinceCases = $('table.wikitable.sortable tbody').first().find('tr').each( (index, element) => {
             
             provinces.push($($(element).find('td')[0]).text().trim().replace(/,/g, ''));
             population.push($($(element).find('td')[1]).text().trim().replace(/,/g, ''));
@@ -454,10 +453,11 @@ const regionsCanada = async (title, date)=>
         // Load the web page source code into a cheerio instance
         const $ = cheerio.load(response.data)
 
-        const regionCases = $('table.wikitable.sortable tbody').first().find('tr').each( (index, element) => {
+        if(title.includes("COVID-19_pandemic_in_Ontario"))
+        {
+            const regionCases = $('#Geographical_distribution').parent().nextAll('table.wikitable.sortable').first().find('tbody').find('tr').each( (index, element) => 
+            {
 
-            if(title.includes("COVID-19_pandemic_in_Ontario"))
-            {              
                 publicHealthUnit.push($($(element).find('td')[0]).text().trim().replace(',',''));
                 cases.push($($(element).find('td')[1]).text().trim().replace(/,/g, ''));
                 casesPerMillion.push($($(element).find('td')[2]).text().trim().replace(/,/g, ''));
@@ -467,17 +467,40 @@ const regionsCanada = async (title, date)=>
 
                 activeCases.push(Number(cases[cases.length-1])-(Number(recovered[recovered.length-1])+Number(deaths[deaths.length-1])));
 
-            }
-            else if(title.includes("COVID-19_pandemic_in_Nova_Scotia"))
+            });
+
+            publicHealthUnit.shift();
+            cases.shift();
+            casesPerMillion.shift();
+            recovered.shift();
+            deaths.shift();
+            deathsPerMillion.shift();
+
+            activeCases.shift();
+
+        }
+        else if(title.includes("COVID-19_pandemic_in_Nova_Scotia"))
+        {
+            
+            const regionCases = $('#Data_by_health_zone').parent().nextAll('table.wikitable.sortable').first().find('tbody').find('tr').each( (index, element) =>
             {
+
                 publicHealthUnit.push($($(element).find('td')[0]).text().trim());
                 cases.push($($(element).find('td')[1]).text().trim());
                 deaths.push($($(element).find('td')[4]).text().trim());
 
                 activeCases.push(Number(cases[cases.length-1])-(Number(recovered[recovered.length-1])+Number(deaths[deaths.length-1])));
 
-            }
-            else if(title.includes("COVID-19_pandemic_in_Saskatchewan"))
+            });
+
+            publicHealthUnit.splice(0, 2);
+            cases.splice(0, 2);
+            deaths.splice(0, 2);  
+            
+        }
+        else if(title.includes("COVID-19_pandemic_in_Saskatchewan"))
+        {
+            const regionCases = $('#Regional_distribution').parent().nextAll('table.wikitable.sortable').first().find('tbody').find('tr').each( (index, element) =>
             {
                 publicHealthUnit.push($($(element).find('td')[0]).text().trim());
                 cases.push($($(element).find('td')[1]).text().trim());
@@ -487,32 +510,8 @@ const regionsCanada = async (title, date)=>
                 
                 activeCases.push(Number(cases[cases.length-1])-(Number(recovered[recovered.length-1])+Number(deaths[deaths.length-1])));
 
-            }
-            
+            });  
 
-        });
-
-        if(title.includes("COVID-19_pandemic_in_Ontario"))
-        {
-            publicHealthUnit.shift();
-            cases.shift();
-            casesPerMillion.shift();
-            recovered.shift();
-            deaths.shift();
-            deathsPerMillion.shift();
-
-            activeCases.shift();
-        }
-        else if(title.includes("COVID-19_pandemic_in_Nova_Scotia"))
-        {
-            publicHealthUnit.splice(0, 2);
-            cases.splice(0, 2);
-            deaths.splice(0, 2);  
-
-            
-        }
-        else if(title.includes("COVID-19_pandemic_in_Saskatchewan"))
-        {
             publicHealthUnit.splice(0, 2);
             publicHealthUnit.splice(-2, 2);
     
@@ -529,8 +528,7 @@ const regionsCanada = async (title, date)=>
             activeCases.splice(-2, 2);
 
         }
-    
-        
+
             
     });
     

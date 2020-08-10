@@ -39,3 +39,19 @@ var provinceNames = (callback)=> {
         })
     })
 }
+
+// var fetchFunction = (url,dateGiven)=>{
+//     fetch(dateGiven ? `/allRegions?date=${dateGiven}` : `/allRegions`).then((response) => {
+//         response.json().then((data) => {
+//             if (data.error) {
+//                 swal('Error', 'Something Went Wrong Please try again', 'error')
+//             }
+//             else if (data == undefined||null || data.length==0) {
+//                 swal('Sorry', 'No up to date data found for Regions.', 'warning')
+//             }
+//             else {
+//                 tableFunction(data, "tableRegion", "tableBodyRegion")
+//                 dateToday.innerHTML=moment().format('DD-MM-YYYY')
+//             }
+//         })
+// }

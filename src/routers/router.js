@@ -190,7 +190,7 @@ app.post('/feedback', async (req, res) => {
         const country = req.body.country
         if (firstName != null && lastName != null && emailId != null && comments != null) {
             if (!validator.isEmail(emailId)) {
-                throw Error('Email format is Invalid')
+                res.send(JSON.stringify({'Error':'Please check your email'}))
             }
             const pool = await poolPromise
             const feedback = await pool.request()

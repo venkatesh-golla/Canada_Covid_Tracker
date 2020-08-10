@@ -1,24 +1,26 @@
-var provinceNamesFromDb=[]
+// var provinceNamesFromDb=[]
 
 document.addEventListener('DOMContentLoaded', (e)=> {
     e.preventDefault()
-    provinceNames((names)=>{
-        names.forEach(name => {
-            provinceNamesFromDb.push(name)
-        });
-    })
+    // provinceNames((names)=>{
+    //     names.forEach(name => {
+    //         provinceNamesFromDb.push(name)
+    //     });
+    // })
     const dateGiven=null
     const dateToday = document.querySelector('#dateToday')
     fetch(dateGiven ? `/allProvinces?date=${dateGiven}`: `/allProvinces`).then((response) => {
         response.json().then((data) => {
+            console.log(data.length)
             if (data.error) {
                 swal('Error','Something Went Wrong Please try again','error')
             }
-            else if (data == undefined||null) {
-                swal('Sorry','No data found for Province','warning')
+            else if (data == undefined||null || data.length==0) {
+                swal('Sorry','No up to date data found for Provinces','warning')
             }
             else {
                 //const dataJson=JSON.parse(data)
+                console.log(data)
                 tableFunction(data,"tableProvince","tableBodyProvince")
                 dateToday.innerHTML=moment().format('DD-MM-YYYY')
             }
@@ -46,7 +48,7 @@ document.querySelector('#provinceSubmitButton').addEventListener('click', (e) =>
         return swal('Province name should contain only letters')
     }
     else if (dateGiven > moment().format('YYYY-MM-DD')) {
-        regionReset()
+        provinceReset()
         return swal('No future dates please')
     }
     // else if(!provinceNamesFromDb.includes(provinceName)){
